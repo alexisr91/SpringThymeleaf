@@ -2,7 +2,7 @@ spring:
     application:
         name: ApplicationSpringThApplication
     datasource:
-        url: jdbc:mysql://localhost3306/app_store
+        url: jdbc:mysql://localhost:8889/app_store
         username: root
         password: root
         driver-class-name: com.mysql.cj.jdbc.Driver
