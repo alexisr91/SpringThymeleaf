@@ -25,12 +25,15 @@
         </thead>
         <tbody>
         <tr th:each="product, status : ${products}">
+            <!-- la variable products vient du controller ProductController, ou on a ajouté products en parametre dans ma méthode addAttribute
+                status sera le nombre de produits dans la boucle for each-->
             <td th:text="${status.count}"></td>
             <td th:text="${product.productType}"></td>
             <td th:text="${product.brand}"></td>
             <td th:text="${product.model}"></td>
             <td th:text="${product.price}"></td>
             <td th:text="${product.year}"></td>
+            
             <td>
                 <a th:href="@{/product/edit/{id}(id=${product.id})}" class="btn btn-primary">Edit</a>
                 <a th:href="@{/product/delete/{id}(id=${product.id})}" class="btn btn-danger">Delete</a>
