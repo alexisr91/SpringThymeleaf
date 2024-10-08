@@ -15,7 +15,7 @@ import com.alexis.ApplicationSpringTh.repository.ProductRepository;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 @Controller
@@ -41,9 +41,12 @@ public class ProductController {
 
     @PostMapping("/product")
     // On recupere l'adresse /product qui est dans l'attribut action du form et on save et soumet le formulaire avec cette méthode 
-    public String saveProduct(@Valid @ModelAttribute("product") Product product, BindingResult bindingResult){
-        // Binding result collection si il y a des erreurs dans mon controleur
+    public String saveProduct(@Valid @ModelAttribute("product") Product product, BindingResult bindingResult, Model model){
+        // @Binding result collectionne si il y a des erreurs dans mon controleur dansla validation. Permet de capturer et de traiter les erreurs de validation.
+        // @Valid active la validation des champs de l'objet product.  Extrait les valeurs des variables d'URL
+
         if(bindingResult.hasErrors()){
+            model.addAttribute("types", ProductType.values());
             return "newProduct";
         }
         productRepository.save(product);
@@ -54,11 +57,21 @@ public class ProductController {
     @GetMapping("/product/edit/{id}")
     public String editProduct(@PathVariable Long id,Model model) {
         // Je recupere mon produit vérifié 
+        // @Pathvariable récupère l'ID du produit à partir de l'URL.
         Product product = productRepository.findById(id).orElseThrow(() -> new IllegalArgumentException(" Invalid product id: " + id));
         // Expression lambda pour implémenter une exception en 1 ligne. Sucre syntaxique 
         model.addAttribute("product", product);
         model.addAttribute("types", ProductType.values());
-        return " editProduct";
+        return "editProduct";
     }
     
+    @PostMapping("/product/{id}")
+    public String updateProdut(@PathVariable Long id, @Valid @ModelAttribute("product")Product product, BindingResult bindingResult, Model model ){
+        if(bindingResult.hasErrors()){
+            model.addAttribute("types", ProductType.values());
+            return "editProduct";
+        }
+        productRepository.save(product);
+        return "redirect:/";
+    }
 }
