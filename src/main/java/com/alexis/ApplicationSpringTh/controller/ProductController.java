@@ -72,6 +72,6 @@ public class ProductController {
             return "editProduct";
         }
         productRepository.save(product);
-        return "redirect:/";
+        
     }
 }
