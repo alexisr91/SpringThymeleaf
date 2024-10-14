@@ -42,7 +42,7 @@ public class ProductController {
     @PostMapping("/product")
     // On recupere l'adresse /product qui est dans l'attribut action du form et on save et soumet le formulaire avec cette méthode 
     public String saveProduct(@Valid @ModelAttribute("product") Product product, BindingResult bindingResult, Model model){
-        // @Binding result collectionne si il y a des erreurs dans mon controleur dansla validation. Permet de capturer et de traiter les erreurs de validation.
+        // @Binding result collectionne si il y a des erreurs dans mon controleur dans la validation. Permet de capturer et de traiter les erreurs de validation.
         // @Valid active la validation des champs de l'objet product.  Extrait les valeurs des variables d'URL
 
         if(bindingResult.hasErrors()){
@@ -74,4 +74,11 @@ public class ProductController {
         productRepository.save(product);
         return "redirect:/";
     }
+
+
+    @GetMapping("/product/delete/{id}")
+        public String deleteProduct(@PathVariable Long id, Model model){
+            productRepository.deleteById(id);
+            return "redirect:/";
+        }
 }
