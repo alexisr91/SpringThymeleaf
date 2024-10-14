@@ -76,9 +76,5 @@ public class ProductController {
     }
 
 
-    @GetMapping("/product/delete/{id}")
-        public String deleteProduct(@PathVariable Long id, Model model){
-            productRepository.deleteById(id);
-            return "redirect:/";
-        }
+   
 }
